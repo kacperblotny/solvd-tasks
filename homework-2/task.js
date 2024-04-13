@@ -8,7 +8,6 @@ const dataTransformer = {
       return 'Addition not possible for the given types.'
     }
   },
-
   stringifyValue: (value) => {
     if (typeof value === 'object' || Array.isArray(value)) {
       return JSON.stringify(value)
@@ -16,14 +15,12 @@ const dataTransformer = {
       return String(value)
     }
   },
-
   invertBoolean: (value) => {
     if (typeof value !== 'boolean') {
       return 'Expected a boolean argument.'
     }
     return !value
   },
-
   convertToNumber: (value) => {
     if (typeof value === 'string') {
       const parsedValue = parseFloat(value)
@@ -37,7 +34,6 @@ const dataTransformer = {
     }
     return 'Conversion to number not possible.'
   },
-
   coerceToType: (value, type) => {
     switch (type) {
       case 'string':
@@ -47,6 +43,10 @@ const dataTransformer = {
       case 'boolean':
         if (typeof value === 'boolean') {
           return value
+        } else if (value.toLowerCase() === 'true') {
+          return true
+        } else if (value.toLowerCase() === 'false') {
+          return false
         } else {
           return 'Conversion to boolean not possible.'
         }
@@ -54,27 +54,30 @@ const dataTransformer = {
         return 'Unsupported type.'
     }
   },
-
-  // Additional function: check if a value is numeric
-  isNumeric: (value) => {
-    return !isNaN(parseFloat(value)) && isFinite(value)
-  },
-
-  // Additional function: safely convert to integer
-  toInteger: (value) => {
-    if (dataTransformer.isNumeric(value)) {
-      return parseInt(value, 10)
-    }
-    return 'Conversion to integer not possible.'
-  },
 }
 
-// Example usage:
+// Tests
+
+console.log('Add values')
 console.log(dataTransformer.addValues(5, 3)) // Output: 8
-console.log(dataTransformer.addValues('Hello', ' World')) // Output: 'Hello World'
+console.log(dataTransformer.addValues('5', '3')) // Output: 53
+console.log(dataTransformer.addValues(5, '3'), '\n') // Output: error
+
+console.log('Stringify value')
 console.log(dataTransformer.stringifyValue({ name: 'John', age: 30 })) // Output: '{"name":"John","age":30}'
+console.log(dataTransformer.stringifyValue(true)) // Output: true
+console.log(dataTransformer.stringifyValue(2) + '\n') // Output: 2
+
+console.log('Invert boolean')
 console.log(dataTransformer.invertBoolean(true)) // Output: false
-console.log(dataTransformer.convertToNumber('42')) // Output: 42
-console.log(dataTransformer.coerceToType('true', 'boolean')) // Output: true
-console.log(dataTransformer.isNumeric('123')) // Output: true
-console.log(dataTransformer.toInteger('42')) // Output: 42
+console.log(dataTransformer.invertBoolean(false)) // Output: true
+console.log(dataTransformer.invertBoolean(1) + '\n') // Output: error
+
+console.log('Convert to number')
+console.log(dataTransformer.convertToNumber('15')) // Output: 15
+console.log(dataTransformer.convertToNumber([1]) + '\n') // Output: 1
+
+console.log('Coerce to type')
+console.log(dataTransformer.coerceToType('123', 'number')) // Output: 123
+console.log(dataTransformer.coerceToType(123, 'string')) // Output: 123
+console.log(dataTransformer.coerceToType('true', 'boolean') + '\n') // Output: true
