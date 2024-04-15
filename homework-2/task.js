@@ -37,7 +37,7 @@ const dataTransformer = {
   coerceToType: (value, type) => {
     switch (type) {
       case 'string':
-        return String(value)
+        return dataTransformer.stringifyValue(value)
       case 'number':
         return dataTransformer.convertToNumber(value)
       case 'boolean':
