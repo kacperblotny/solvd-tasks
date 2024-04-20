@@ -1,8 +1,13 @@
-function factorial(n) {
-  if (n === 0) {
-    return 1
+function calculateFactorial(n) {
+  function fact(n, acc) {
+    if (n < 2) {
+      return acc
+    } else {
+      return fact(n - 1, n * acc)
+    }
   }
-  return n * factorial(n - 1)
+
+  return fact(n, 1)
 }
 
 function power(base, exponent) {
@@ -13,6 +18,5 @@ function power(base, exponent) {
 }
 
 // testing
-console.log(factorial(5))
-
+console.log(calculateFactorial(5))
 console.log(power(2, 4))

@@ -11,13 +11,12 @@ function filterUniqueWords(text) {
 }
 
 function getAverageGrade(students) {
-  const allGrades = students.map((student) => student.grades).flat()
-
-  return Number(
-    (
-      allGrades.reduce((total, grade) => total + grade, 0) / allGrades.length
-    ).toFixed(2)
-  )
+  return students.map((student) => {
+    const averageGrade =
+      student.grades.reduce((acc, grade) => acc + grade, 0) /
+      student.grades.length
+    return { name: student.name, averageGrade }
+  })
 }
 
 // testing
