@@ -13,15 +13,6 @@ function customFilterUnique(array, callback) {
   })
 
   return uniqueArray
-  // const uniqueValues = []
-
-  // array.forEach((item) => {
-  //   if (!uniqueValues.some((uniqueItem) => callback(item, uniqueItem))) {
-  //     uniqueValues.push(item)
-  //   }
-  // })
-
-  // return uniqueValues
 }
 
 // callback for uniqie items/objects
