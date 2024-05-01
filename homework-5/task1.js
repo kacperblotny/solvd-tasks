@@ -1,13 +1,27 @@
 function customFilterUnique(array, callback) {
-  const uniqueValues = []
+  const uniqueArray = []
+  const seen = new Set()
 
   array.forEach((item) => {
-    if (!uniqueValues.some((uniqueItem) => callback(item, uniqueItem))) {
-      uniqueValues.push(item)
+    const result = callback(item)
+    const key = result instanceof Object ? JSON.stringify(result) : result // Convert objects to strings for comparison
+
+    if (!seen.has(key) && typeof key != 'undefined') {
+      seen.add(key)
+      uniqueArray.push(item)
     }
   })
 
-  return uniqueValues
+  return uniqueArray
+  // const uniqueValues = []
+
+  // array.forEach((item) => {
+  //   if (!uniqueValues.some((uniqueItem) => callback(item, uniqueItem))) {
+  //     uniqueValues.push(item)
+  //   }
+  // })
+
+  // return uniqueValues
 }
 
 // callback for uniqie items/objects
@@ -40,6 +54,23 @@ const arr = [1, 2, 3, 4, 5, 3, 5, 7, 3, 5, 1]
 //   { name: 'Jane', age: 35 },
 //   { name: 'Jane', age: 35 },
 // ]
+let arrayOfObjects = [
+  { a: 1, b: 2 },
+  { a: 1, b: 2 },
+  { c: 3, d: 4 },
+  { a: 5, b: 6 },
+  { e: 7, f: 8 },
+  { g: 9, h: 0 },
+]
+const filterByPropertyA = (obj) => {
+  if (!obj || typeof obj !== 'object')
+    throw new Error('pass an object as parameter')
+  // if (Object.keys(obj).includes('a') ? obj : undefined) {
+  //   console.log(Object.keys(obj))
+  // }
 
-const unique = customFilterUnique(arr, isUnique)
-console.log(unique)
+  return Object.keys(obj).includes('a') ? obj : undefined
+}
+
+const uniqueTest = customFilterUnique(arrayOfObjects, filterByPropertyA)
+console.log(uniqueTest)
