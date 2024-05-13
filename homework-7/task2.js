@@ -16,6 +16,7 @@ function promiseAllSettled(promises) {
             status: 'fulfilled',
             value: result,
           })
+          
           completedPromises++
           checkAllPromisesCompleted()
         })
